@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Crate.ly - All the online music in one place</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Crate.ly makes it easy to track and catalog your online music.">
+  <meta name="author" content="@gianpaj">
+  <meta name="google-site-verification" content="" />
+
+  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- Le fav icons -->
+  <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+  <!-- Le styles -->
+  <!-- <link rel="stylesheet" href="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/css/style.min.css" /> -->
+  <link rel="stylesheet" href="/static/css/app-bootstrap.2.1.0.css" />
+  <!-- <link rel="stylesheet" href="/static/css/bootstrap-responsive.css"> -->
+  <link rel="stylesheet" href="/static/css/jquery.noty.css" />
+
+  <!-- JavaScript library added at the top to render the page before reaching the bottom of the page -->
+  <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+  <script>window.ko || document.write('<script src="/static/js/libs/knockout-2.2.1.js"><\/script>')</script>
+</head>
+
+<body>
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+  <div id="confirmModal" class="modal hide">
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">&times;</a>
+      <h3>Are you sure?</h3>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button class="btn btn-primary" id="confirmOkBtn">Ok</button>
+    </div>
+  </div>
+
+  <div id="appcontainer">
+
+    <div id="header">
+      <a id="logo" href="/"></a>
+    </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar">&nbsp;</span>
+            <span class="icon-bar">&nbsp;</span>
+            <span class="icon-bar">&nbsp;</span>
+          </a>
+
+          <a class="brand" href="#Dashboard"><img src="static/img/crate.ly-navbar-logo.png" alt="crate.ly"></a>
+          <ul class="nav span2"><li class="navbar-text">(alpha)</li></ul>
+
+          <div class="nav-collapse collapse navbar-responsive-collapse">
+            <form class="navbar-search pull-left" data-bind="submit: searchAdd">
+              <!-- <div class="control-group"> -->
+                <!-- <div class="controls"> -->
+                    <input class="search-query input-xlarge" style="margin-right: -28px" type="text" placeholder="Search on SoundCloud by name or URL">
+                    <span class="add-on"><i class="icon-search" style="margin-top: 4px">&nbsp;</i></span>
+                <!-- </div> -->
+              <!-- </div> -->
+            </form>
+            <ul class="nav pull-right">
+              <li><div class="btn-group">
+                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white">&nbsp;</i> <span data-bind='text: username'>&nbsp;</span></a>
+                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret" style="border-bottom-color: #FFFFFF; border-top-color: #FFFFFF;">&nbsp;</span></a>
+                <ul class="dropdown-menu">
+                  <!-- <li><a href=""><i class="icon-cog"></i> Settings</a></li>    <li class="divider"></li> -->
+                  <li><a data-bind="click: logout"><i class="icon-off">&nbsp;</i> Logout</a></li>
+                </ul>
+              </div></li>
+            </ul>
+          </div>
+        </div><!--/container-->
+      </div><!--/navbar-inner-->
+    </div> <!--/navbar navbar-inverse-->
+
+    <div class="container-fluid middle">
+
+      <div class="row-fluid">
+
+        <div class="span3 leftbar">
+          <div class="well sidebar-nav playlists-menu">
+            <ul class="nav nav-list"><li class="nav-header">Main</li></ul>
+            <ul class="playlist" data-bind="foreach: mainPlaylists">
+              <li class="display">
+                <div class="todo-content" data-bind="css: { active: title() == $root.chosenPlaylistId() },
+                 click: goToPlaylist">
+                  <i data-bind="attr: { 'class': icon }, css: { 'icon-white' : title == $root.chosenPlaylistId() }">&nbsp;</i> <span data-bind="text: title">&nbsp;</span>
+                  
+                </div>
+                <!-- <div data-bind="sortable: { data: recordings }"></div> -->
+              </li>
+            </ul>
+            <ul class="nav nav-list"><li class="nav-header">Collection</li></ul>
+            <ul class="playlist" data-bind="foreach: userPlaylists">
+              <li data-bind="css: { editing: editing }">
+                <div class="display">
+                  <div class="todo-content" data-bind="css: { active: title() == $root.chosenPlaylistId() }, event: { dblclick: edit, click: goToPlaylist}">
+                     <i data-bind="attr: { 'class': icon }, css: { 'icon-white' : title() == $root.chosenPlaylistId() }">&nbsp;</i> <span data-bind="text: title">&nbsp;</span>
+                    
+                  </div>
+                  <!-- <div data-bind="sortable: { data: recordings }"></div> -->
+                  <span class="todo-destroy" data-bind="click: $root.removePlaylist">&nbsp;</span>
+                </div>
+                <div class="edit">
+                  <input class="todo-input" data-bind="value: title, enterKey: stopEditing, event: { blur: stopEditing }, selectAndFocus: editing, escKey: cancel"/>
+                </div>
+              </li>
+            </ul>
+
+            <hr>
+            <a class="btn btn-primary" style="margin-left: 14px;" data-bind="click: addPlaylist"><i class="icon-plus icon-white">&nbsp;</i> New Playlist</a>
+           
+          </div><!--.well-->
+        </div><!--.leftbar-->
+
+        <div class="span9 rightcontent">
+          <div style="margin-top: 18px; margin-right: 21px;">
+          <div class="hero-unit" style="padding-bottom: 40px" data-bind="visible: chosenPlaylistId() == 'Dashboard'">
+            <h2 style="text-align: center">How to Add Audio Tracks</h2>
+            <br>
+            <div class="left-bookmark">
+              <h5>Bookmark Button</h5>
+              <br/>
+              <span>Drag this button to your Bookmarks Bar</span>
+              <a alt="+Crate.ly" href='javascript:(function(){var a=document,b,c=a.createElement("script"),d=a.body,e=a.title;l=a.location.protocol,String.prototype.contains||(String.prototype.contains=function(a){return this.indexOf(a)!=-1});try{if(!d)throw 0;if(!a.URL.contains("soundcloud.com"))throw 1;if(a.URL.contains("/sets/"))throw 2;if(a.URL.contains("/groups/"))throw 2;e.substring(0,12)=="(Saving...) "&&(e=e.substring(12)),e="(Saving...) "+e,c.setAttribute("src",l+"//assets.listentoitlater.co/js/bookmarklet.js?t="+encodeURIComponent(a.title)+"&d="+(new Date).getTime()),d.appendChild(c)}catch(f){f===0?alert("Please wait until the page has loaded."):f===1?alert("Crate.ly bookmarklet works with SoundCloud only. Sorry"):alert("Works only with SoundCloud tracks (not sets or groups). Navigate to each track to save it to Crate.ly")}})(),void 0;'>+ Crate.ly</a>
+              <span>When browsing SoundCloud.com<br>click +Crate.ly<br>to add a sound to your Favorites</span>
+            </div>
+            <div class="right-bookmark">
+              <img alt="" src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/img/install-bookmarklet.png" style="position:relative; right:14px; width: 90%">
+            </div>
+            <div style="height: 260px">&nbsp;</div>
+          </div>
+
+          <table class="table table-striped" data-bind="with: chosenPlaylistData" style="height: 10px">
+            <tbody data-bind="sortable: { data: recordings }">
+            <tr class="recoding-row">
+              <td class="artwork-cell"><a href="#" data-bind="click: $root.playSong" class="thumbnail artwork"><img alt="artwork" src="#" data-bind="attr: { src : artwork_url }"></a></td>
+              <td style="font-size: 14px; font-weight: bold; width: 400px; padding-right: 45px;"><i class="currentlyplaying">&nbsp;</i> <a href="#" data-bind="text: title, click: $root.playSong"></a></td>
+              <td>source: <a style="color: #555" data-bind="text: platform.name.toLowerCase()+'.com', attr: { href: platform.url+url }" target="_blank"></a></td>
+              <td>
+                <div data-bind="visible: $parent.recordingInPlaylist($data, 'Favorites')">
+                  <a data-bind=""><i class="icon-star icon-red icon-opac">&nbsp;</i></a>
+                </div>
+                
+                <div data-bind="visible: !$parent.recordingInPlaylist($data, 'Favorites')">
+                  <a data-bind="click: $parent.addToPlaylist.bind($data,'Favorites')"><i class="icon-star icon-black icon-opac">&nbsp;</i></a>
+                </div>
+              </td>
+              <td><a data-bind="click: $parent.removeRecording"><i class="icon-remove icon-opac">&nbsp;</i></a></td>
+            </tr>
+            </tbody>
+          </table>
+          <table class="table" data-bind="visible: (chosenPlaylistData() !== null && chosenPlaylistData().recordings().length < 1)">
+            <tbody>
+              <tr>
+                <td colspan="4" style="text-align: center">No songs in this playlist</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div><!--.rightcontent-->
+        
+      </div><!--.row-fluid-->
+
+    </div> <!--.container-fluid-->
+  
+  </div> <!-- #appcontainer-->
+  <div class="navbar navbar-fixed-bottom bottomplayer">
+    <div class='player'>
+      <a class='button prev' data-bind="click: prevTrack" style="margin-left: 10px"></a>
+      <a class='button play'></a>
+      <a class='button pause'></a>
+      <a class='button next' data-bind="click: nextTrack"></a>
+      <section class="player-button volumesection">
+        <span class="volumetooltip"></span> <!-- Tooltip -->
+        <div class="slider" data-bind="slider: volume, value: volume"></div> <!-- the Slider -->
+        <span class="volume" data-bind="click: triggerVolume"></span> <!-- Volume -->
+      </section>
+      <ul class="breadcrumb player-button-title">
+        Click an audio track to start listening<li>&nbsp;</li>
+      </ul>
+      <div class="player-button">
+        <div id="sm2-status"></div>
+        <div id="sm2-container"></div>
+      </div>
+    </div>
+    <div id="message" data-bind="flash: lastAction"></div>
+    <div id="error" data-bind="flash: lastError"></div>
+  </div> <!-- .bottomplayer-->
+  
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/static/js/libs/jquery-1.8.1.min.js"><\/script>')</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+  <!-- update to jquery ui 1.10 -->
+  <script>window.jQuery.ui || document.write('<script src="/static/js/libs/jquery-ui-1.8.23.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.2/sammy.min.js"></script>
+  <script>window.Sammy || document.write('<script src="/static/js/libs/sammy.min.js"><\/script>')</script>
+  <!-- <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/libs/bootstrap-2.0.1-custom.js"></script> -->
+  <script src="/static/js/libs/bootstrap-2.3.0-custom.js"></script>
+  <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/libs/jquery.noty.js"></script>
+  <script>window.jQuery.noty || document.write('<script src="/static/js/libs/jquery.noty.js"><\/script>')</script>
+  <!-- <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/libs/knockout-sortable.min.js"></script> -->
+  <script src="/static/js/libs/knockout-sortable.min.js"></script>
+  <!-- <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/libs/bootbox.min.js"></script> -->
+  <!-- <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/libs/soundmanager2.js"></script> -->
+  <script src="/static/js/libs/soundmanager2.js"></script>
+  <!-- <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/libs/spin.min.js"></script> -->
+  <script src="/static/js/libs/spin.min.js"></script>
+  <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/libs/raven-0.5.2.min.js"></script>
+
+  <!-- scripts concatenated and minified via build script -->
+  <!-- <script src="https://s3-eu-west-1.amazonaws.com/assets.listentoitlater.co/js/script.min.js"></script> -->
+  <!--(if target dev)>
+  <script type="text/javascript">
+    var devmode = true;
+  </script>
+  <script src="/static/js/plugins.js"></script>
+  <script src="/static/js/script.js"></script>
+  <script src="/static/js/templates.js"></script>
+  <!(endif)-->
+
+  <!--(if target prod)>
+  <script type="text/javascript">
+    var devmode = false;
+  </script>
+  <script src="/static/js/script.min.js"></script>
+  <script src="/static/js/{{pkg_title}}.min.js"></script>
+  <script type="text/javascript">
+    var analytics=analytics||[];analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);var r=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}},i=["identify","track","trackLink","trackForm","trackClick","trackSubmit","pageview","ab","alias","ready"];for(var s=0;s<i.length;s++)analytics[i[s]]=r(i[s])};
+    analytics.load("");
+  </script>
+
+  <div id="getsat-widget-3306"></div>
+  <script type="text/javascript" src="https://loader.engage.gsfn.us/loader.js"></script>
+  <script type="text/javascript">
+    if (typeof GSFN !== "undefined") { GSFN.loadWidget(3306,{"containerId":"getsat-widget-3306"}); }
+  </script>
+  
+  <script>
+    var _gaq=[['_setAccount',''],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+  <!(endif)-->
+
+  <!-- soundManager -->
+  <script type="text/javascript">
+    soundManager.url = 'static/swf/';
+    soundManager.useFlashBlock = true;
+    soundManager.debugMode = false;
+    soundManager.defaultOptions.multiShot = false;
+  </script>
+</body>
+</html>

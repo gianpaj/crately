@@ -1,0 +1,27 @@
+*.DS_Store
+env/
+*.pyc
+codebase*
+*/static/css/notused/*
+*/static/js/libs/notused/*
+*/static/js/libs/devonly/*
+
+node_modules/
+test/
+
+# generated html files
+listentoitlater/templates/
+
+# generated css files
+listentoitlater/static/css/bootstrap.2.1.0.css
+listentoitlater/static/css/bootstrap-responsive.css
+listentoitlater/static/css/app-bootstrap.2.1.0.css
+
+# generated js files
+listentoitlater/static/js/crately.js
+listentoitlater/static/js/crately.min.js
+listentoitlater/static/js/script.min.js
+listentoitlater/static/js/login.min.js
+
+# not needed for static
+scripts
