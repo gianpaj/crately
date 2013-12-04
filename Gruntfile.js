@@ -170,6 +170,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('qcu', [/* 'qunit', */'concat', 'uglify']);
   grunt.registerTask('default', ['targethtml:dev', 'less:dev', 'concat', 'watch']);
+  grunt.registerTask('static', ['targethtml:dev', 'less:dev', 'concat']);
   grunt.registerTask('prod', ['qcu', 'less:prod', 'targethtml:prod']);
 
 };
