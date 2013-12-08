@@ -2,9 +2,6 @@
 env/
 *.pyc
 codebase*
-*/static/css/notused/*
-*/static/js/libs/notused/*
-*/static/js/libs/devonly/*
 
 node_modules/
 test/
@@ -23,5 +20,5 @@ listentoitlater/static/js/crately.min.js
 listentoitlater/static/js/script.min.js
 listentoitlater/static/js/login.min.js
 
-# not needed for static
+# not needed for scripts
 scripts
