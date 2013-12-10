@@ -125,11 +125,6 @@ def change_password(token):
     pass
 
 
-@app.route('')
-def blitz():
-    return '42'
-
-
 @cache.cached(timeout=3600)
 @app.route('/<staticfile>.html')
 def alexa(staticfile):

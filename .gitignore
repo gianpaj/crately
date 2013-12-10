@@ -22,3 +22,9 @@ listentoitlater/static/js/login.min.js
 
 # not needed for scripts
 scripts
+
+# config files
+development.cfg
+production.cfg
+cherrypy.conf
+listentoitlater/listentoitlater.cfg

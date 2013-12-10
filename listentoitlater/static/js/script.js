@@ -384,6 +384,11 @@ var ViewModel = function() {
   };
 
   self.playSong = function (recording, event) {
+    if (snd_client_id == '') {
+      alert('There is no soundtravel api key in listentoitlater/static/js/script.js');
+      return;
+    }
+
     var chosenPlaylist;
     var $elem = ('target' in event) ? $(event.target) : ('srcElement' in event) ? $(event.srcElement) : null;
 

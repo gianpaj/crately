@@ -1,0 +1,9 @@
+[Flask]
+SSL = False
+Testing = True
+Port = 8000
+
+[SSL]
+cert_path = /mydevprojectdirectory/listentoitlater/crately.crt
+pkey_path = /mydevprojectdirectory/listentoitlater/crately.key
+gdbundle_path = /mydevprojectdirectory/listentoitlater/gd_bundle.crt

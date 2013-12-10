@@ -1,0 +1,35 @@
+blinker==1.2
+CherryPy==3.2.2
+Flask==0.9
+Flask-Cache==0.8.0
+Flask-Login==0.1.3
+Flask-OAuth==0.12
+Flask-WTF==0.8
+Jinja2==2.6
+WTForms==1.0.2
+Werkzeug==0.8.3
+httplib2==0.7.6
+mongoengine==0.7.5
+oauth2==1.5.211
+postmonkey==1.0a4
+pymongo==2.3
+requests==0.14.2
+wsgiref==0.1.2
+pyOpenSSL==0.13
+
+# ConfigParser dependecies
+ordereddict==1.1
+unittest2==0.5.1
+
+# ConfigParser
+configparser==3.2.0r3
+
+# Mandrill
+#mandrill==1.0.19
+#docopt==0.4.0
+simplejson==3.1.2
+mailsnake==1.6.2
+
+# fix a reason "unrepr could not resolve the name" error
+newrelic==1.13.1.31
+sentry==5.4.5

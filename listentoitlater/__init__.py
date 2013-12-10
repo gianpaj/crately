@@ -6,6 +6,7 @@ from ConfigParser import RawConfigParser
 from os.path import dirname, realpath
 
 app = Flask('listentoitlater')
+# config for production - DEBUG gets overwritten in runserver.py
 app.config.from_pyfile('listentoitlater.cfg')
 cache = Cache(app)
 

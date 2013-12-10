@@ -1,0 +1,3 @@
+[Flask]
+SENTRY_DSN = https://...
+Testing = True

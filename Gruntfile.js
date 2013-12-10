@@ -117,7 +117,7 @@ module.exports = function(grunt) {
     targethtml: {
       dev: {
         files: {
-          '<%= oldname %>/index.html': '<%= oldname %>/templates_src/index.html',
+          '<%= oldname %>/templates/index.html': '<%= oldname %>/templates_src/index.html',
           '<%= oldname %>/templates/app.html': '<%= oldname %>/templates_src/app.html'
         }
       },
@@ -128,7 +128,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          '<%= oldname %>/index.html': '<%= oldname %>/templates_src/index.html',
+          '<%= oldname %>/templates/index.html': '<%= oldname %>/templates_src/index.html',
           '<%= oldname %>/templates/app.html': '<%= oldname %>/templates_src/app.html'
         }
       }

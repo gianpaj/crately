@@ -16,10 +16,20 @@ To quickly mark songs, the first implementation was to done via a browser Bookma
 
 ### Front-end:
 
-- [Knockout.js](knockoutjs.com) for the JavaScript Framework
-- jQuery
+- [Knockout.js](knockoutjs.com) 2.2 for the JavaScript Framework
+- jQuery, jQuery UI
+- Bootstrap 2
 - [Grunt](http://gruntjs.com) (which requires npm, [node](https://
 github.com/joyent/node/wiki/Installing-Node.js-via-package-manager))
+- LiveReload Chrome [Extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
+
+For the actual music web app:
+
+- [SoundManager](http://www.schillmania.com/projects/soundmanager2/)
+- [Sammy.js](http://sammyjs.org/) for routes
+- jquery.noty
+- knockout-sortable
+- spin.js
 
 ### Back-end:
 
@@ -39,13 +49,24 @@ I used:
 
 ## Quick start
 
+### Configuration
+
+- Save the SoundCloud API KEY in [script.js](/listentoitlater/static/js/script.js)
+
+
+### Start
+
 Run these commands to start the **development** environment:
 
 	mongod
-	grunt static
-	p
+	grunt
 
-Open [http://0.0.0.0:8000](http://0.0.0.0:8000)
+Open an new terminal:
+
+	scripts/startcrately.sh
+
+Open in the browser [http://0.0.0.0:8000/](http://0.0.0.0:8000)
+
 
 ## Setup the production server
 

@@ -1,0 +1,10 @@
+[global]
+server.socket_host = "0.0.0.0"
+server.socket_port = 443
+server.ssl_certificate = "/myserverprojectdirectory/crately/crately.crt"
+server.ssl_private_key = "/myserverprojectdirectory/crately/crately.key"
+server.ssl_certificate_chain = "/myserverprojectdirectory/crately/gd_bundle.crt"
+log.error_file = "/var/log/cherryd-error.log"
+log.screen = True
+request.dispatch = cherrypy.dispatch.MethodDispatcher()
+tree.mount = {"/":listentoitlater.app}

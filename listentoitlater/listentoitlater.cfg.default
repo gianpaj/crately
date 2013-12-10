@@ -1,0 +1,3 @@
+SECRET_KEY = ''
+DEBUG = False
+CACHE_TYPE = 'simple'
