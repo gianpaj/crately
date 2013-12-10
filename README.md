@@ -27,9 +27,9 @@ For the actual music web app:
 
 - [SoundManager](http://www.schillmania.com/projects/soundmanager2/)
 - [Sammy.js](http://sammyjs.org/) for routes
-- jquery.noty
-- knockout-sortable
-- spin.js
+- [jquery.noty](http://needim.github.io/noty/)
+- [knockout-sortable](https://github.com/rniemeyer/knockout-sortable)
+- [spin.js](http://fgnass.github.io/spin.js/)
 
 ### Back-end:
 
