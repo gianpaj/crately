@@ -4,6 +4,8 @@ Crate.ly - All the online music in one place (discontinued)
 
 See the [static brach](https://github.com/gianpaj/crately/tree/static) for the static  or landing page which you can see on [crate.ly](http://crate.ly)<br/>
 
+![image](screenshot1.jpeg)
+
 ## Project's Objective
 
 The idea came about while doing an internship in my 3rd year in DIT. When you find a great track on your work computer either on SoundCloud, YouTube or else, there really no good way to organise those tracks so you can later download them, find more from the artist or DJ.
