@@ -53,39 +53,53 @@ I used:
 
 ### Configuration
 
-- Save the SoundCloud API KEY in [script.js](/listentoitlater/static/js/script.js)
+- Save the SoundCloud API KEY in `script.js`
 
+- Copy `development.cfg.default` to `development.cfg`
+- Copy `production.cfg.default` to `production.cfg`
+- Copy `listentoitlater/listentoitlater.cfg.default` `listentoitlater/listentoitlater.cfg`
 
-### Start
+### Install the requirements for your development environment
 
-Run these commands to start the **development** environment:
+- [MongoDB](http://docs.mongodb.org/manual/installation/)
+- Python
+- [PyMongo](http://api.mongodb.org/python/current/installation.html)
+- [virtualenv](http://www.virtualenv.org/) 
+
+### Start the **development** environment:
 
 	mongod
-	grunt
 
 Open an new terminal:
 
-	scripts/startcrately.sh
+	virtualenv env
+	. env/bin/activate env
+	pip install -r requirements.txt
+	./runserver.py
+
+Open an new terminal to watch files being updated and automagically refresh the browser:
+
+	grunt
 
 Open in the browser [http://0.0.0.0:8000/](http://0.0.0.0:8000)
 
 
 ## Setup the production server
 
-Yes, i did so many time I wrote all the steps :)
+Yes, i did it so many time, I've written all the steps :)
 
 These are for the Ubuntu 12.04 LTE.
 
-Ssh into your server and add a linux user:
+ssh into your server and add a linux user:
 
 	adduser crately sudo
 	visudo
 
-Make all the users not required:
+Make all the users not require password to run sudo:
 
 	%sudo   ALL=(ALL) NOPASSWD: ALL
 
-Allow the user ssh access so you can use that rather than root:
+Allow the user you created (eg. `cartely`) ssh access so you can use that rather than root:
 
 	nano /etc/ssh/sshd_config
 
@@ -95,7 +109,7 @@ Edit/Add this line:
 
 Transfer your public key to from your dev computer:
 
-	scp .ssh/id_rsa.pub crately@IPADDR:.ssh/authorized_keys
+	scp .ssh/id_rsa.pub crately@SERVERHOST:.ssh/authorized_keys
 	
 Go back to the server and change the permission of the ssh authorized_keys:
 
@@ -136,7 +150,7 @@ Setup the directory for the project and deploy from a remote git:
 	git config receive.denycurrentbranch ignore
 	git config core.worktree ../crately
 
-Setup a post-receive hook to update the worktree folder after new changes have been pushed to the repo:
+Setup a `post-receive` hook to run the fabric script after new changes have been pushed to the repo:
 
 	nano hooks/post-receive
 	
@@ -160,15 +174,17 @@ Get the Python web server ready:
 	
 Add the server's git repo back in the dev computer:
 
-	git remote add digitalocean crately@direct.crate.ly:crately.git
+	git remote add production crately@SERVERHOST:crately.git
 
 Push the repo to the server:
 
-	git push digitalocean master
+	git push production master
 
 Start the web server!
 
 	sudo service cherrypy start
+
+Optional: Set a redirect from port 80 to 443 to allow SSL. To do this you'll need a SSL key for your domain.
 	
 Replace your domain in the NGINX config file:
 
@@ -187,6 +203,6 @@ Take a full backup of the files in the current directory (.)
 
 	tar -zcvf /tmp/ubuntu-12.04.1-bkp.tar.gz .
 	
-Date a full backup of MongoDB. Note this can take substantial load:
+Take a full backup of MongoDB. Note this can take substantial load:
 
 	mongodump -o /tmp
